@@ -1,4 +1,4 @@
-import { 
+import {
     Application,
     Graphics,
     Text,
@@ -27,6 +27,9 @@ import { initDevtools } from "@pixi/devtools";
     //remove pesky extra scroll space
     app.canvas.style.position = 'absolute';
 
+    const eventSystem = app.renderer.events;
+    const pointer = eventSystem.pointer;
+
     { //Shapes
 
         const rectangle = new Graphics()
@@ -38,9 +41,19 @@ import { initDevtools } from "@pixi/devtools";
             .stroke({
                 width: 8,
                 color: 0X000000
-            })
+            });
 
         app.stage.addChild(rectangle);
+
+        rectangle.pivot.set(75, 50);
+        rectangle.eventMode = 'static';
+        rectangle.cursor = 'pointer';
+        rectangle.on('pointerdown', moveRect);
+
+        function moveRect() {
+            rectangle.x += 5;
+            rectangle.y -= 5;
+        }
 
         const star = new Graphics()
             .star(1000, 250, 12, 80, 40)
@@ -71,12 +84,20 @@ import { initDevtools } from "@pixi/devtools";
         const sprite = new Sprite({
             texture,
             anchor: 0.5, // center anchor point
-            position: {x: 500, y: 500},
+            position: {x: app.canvas.width/2, y: app.canvas.height/2 },
             scale: 0.2,
             rotation: Math.PI / 4,
-            skew: {x: 0.5, y: 0}
+            skew: { x: 0.5, y: 0 }
         });
         app.stage.addChild(sprite);
+
+        app.stage.interactive = true;
+        app.stage.on('pointermove', follow);
+
+        function follow(e) {
+            let pos = e.data.global
+            sprite.position.set(pos.x, pos.y)
+        }
     }
 
     document.body.appendChild(app.canvas);
