@@ -1,0 +1,27 @@
+{
+  "name": "pixi-playground",
+  "version": "1.0.0",
+  "description": "Small playground to test Pixi.js features and environment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ricardo-Cacheira/pixi-playground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ricardo-Cacheira/pixi-playground/issues"
+  },
+  "homepage": "https://github.com/Ricardo-Cacheira/pixi-playground#readme",
+  "dependencies": {
+    "pixi.js": "^8.17.1"
+  },
+  "devDependencies": {
+    "vite": "^8.0.5"
+  }
+}
