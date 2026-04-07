@@ -1,4 +1,13 @@
-import { Application } from "pixi.js";
+import { 
+    Application,
+    Graphics,
+    Text,
+    TextStyle,
+    Sprite,
+    Assets,
+} from "pixi.js";
+
+import { initDevtools } from "@pixi/devtools";
 
 (async () => {
 
@@ -9,12 +18,66 @@ import { Application } from "pixi.js";
         // height: window.innerHeight,
         //equivalent
         resizeTo: window,
-        backgroundAlpha: 0.9,
+        // backgroundAlpha: 0.9,
         backgroundColor: 0x87cefa
     });
 
+    initDevtools({ app })
+
     //remove pesky extra scroll space
     app.canvas.style.position = 'absolute';
+
+    { //Shapes
+
+        const rectangle = new Graphics()
+            .rect(200, 200, 150, 100)
+            .fill({
+                color: 0x00ff00,
+                alpha: 1,
+            })
+            .stroke({
+                width: 8,
+                color: 0X000000
+            })
+
+        app.stage.addChild(rectangle);
+
+        const star = new Graphics()
+            .star(1000, 250, 12, 80, 40)
+            .fill({ color: 0xffea00 })
+
+        app.stage.addChild(star);
+
+    }
+
+    { //Text
+        const style = new TextStyle({
+            fill: 0xffffff,
+            fontSize: 72,
+            fontFamily: 'Comis Sans'
+        });
+
+        const text = new Text({
+            text: 'Hello world',
+            style,
+        });
+
+        app.stage.addChild(text);
+    }
+
+    { //Sprites
+        const texture = await Assets.load('/images/logo.svg');
+
+        const sprite = new Sprite({
+            texture,
+            anchor: 0.5, // center anchor point
+            position: {x: 500, y: 500},
+            scale: 0.2,
+            rotation: Math.PI / 4,
+            skew: {x: 0.5, y: 0}
+        });
+        app.stage.addChild(sprite);
+    }
 
     document.body.appendChild(app.canvas);
 
