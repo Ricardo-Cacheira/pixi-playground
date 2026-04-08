@@ -132,13 +132,18 @@ import { initDevtools } from "@pixi/devtools";
         const warriorsContainer = new Container();
         app.stage.addChild(warriorsContainer);
 
-        const girlTexture = await Assets.load('/images/girl_warrior.png');
-        const girlSprite = new Sprite(girlTexture);
+        Assets.addBundle('warriors', {
+            girl_warrior: '/images/girl_warrior.png',
+            boy_warrior: '/images/boy_warrior.png'
+        });
+
+        const warriorAssets = await Assets.loadBundle('warriors');
+
+        const girlSprite = new Sprite(warriorAssets.girl_warrior);
         girlSprite.scale.set(0.3,0.3);
         girlSprite.anchor.set(0.5,0.5);
         warriorsContainer.addChild(girlSprite);
-        const boyTexture = await Assets.load('/images/boy_warrior.png');
-        const boySprite = new Sprite(boyTexture);
+        const boySprite = new Sprite(warriorAssets.boy_warrior);
         boySprite.scale.set(0.3,0.3);
         boySprite.anchor.set(0.5,0.5);
         warriorsContainer.addChild(boySprite);
